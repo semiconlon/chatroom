@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script type="text/javascript">
+    /*建立websocket,收发数据*/
+    var ws = null;
+
+    function WebSocketConn() {
+        if (ws != null && ws.readyState == 1) {
+            log("已经在线");
+            return
+        }
+
+        if ("WebSocket" in window) {
+            // Let us open a web socket
+            ws = new WebSocket("ws://localhost/api/chatroom");
+
+            ws.onopen = function() {
+                log('成功进入聊天室');
+            };
+
+            ws.onmessage = function(event) {
+                log( event.data)
+            };
+
+            ws.onclose = function() {
+                // websocket is closed.
+                log("已经和服务器断开");
+            };
+
+            ws.onerror = function(event) {
+                console.log("error " + event.data);
+            };
+        } else {
+            // The browser doesn't support WebSocket
+            alert("WebSocket NOT supported by your Browser!");
+        }
+    }
+
+    function SendMsg() {
+        if (ws != null && ws.readyState == 1) {
+          // send the message with the username and message_id
+            message_id ++;
+            var msg = username +' ' + message_id +' :  ' +document.getElementById('msgtext').value;
+            ws.send(msg);
+        } else {
+            log('请先进入聊天室');
+        }
+    }
+
+    function WebSocketClose() {
+        if (ws != null && ws.readyState == 1) {
+            ws.close();
+            log("发送断开服务器请求");
+        } else {
+            log("当前没有连接服务器")
+        }
+    }
+
+    function log(text) {
+        var li = document.createElement('li');
+        li.appendChild( document.createTextNode(text));
+        document.getElementById('log').appendChild(li);
+        return false;
+    }
+
+    /* 获取用户名*/
+    var username = null;
+    /*获取ID*/
+    var uuid = null;
+    var message_id = 0;
+    window.onload= function(){
+      getUsername_uuid_fromCookie();
+    }
+
+    function getUsername_uuid_fromCookie(){
+      username = getCookie('username');
+      if (username == ''){
+        var vsDate=new Date();
+        username = 'visitor' + vsDate.getTime();
+      }
+
+      uuid = getCookie('uuid');
+    }
+
+
+
+    function getCookie(name){
+      /* 获取浏览器所有cookie将其拆分成数组 */
+      var arr=document.cookie.split('; ');
+
+      for(var i=0;i<arr.length;i++)  {
+        /* 将cookie名称和值拆分进行判断 */
+        var arr2=arr[i].split('=');
+        if(arr2[0]==name){
+          return arr2[1];
+        }
+      }
+
+      return '';
+    }
+
+    </script>
+
+
+</head>
+
+<body>
+    <div id="sse">
+        <a href="javascript:WebSocketConn()">进入聊天室</a> &nbsp;
+        <a href="javascript:WebSocketClose()">离开聊天室</a>
+        <br>
+        <br>
+        <input id="msgtext" type="text">
+        <br>
+        <a href="javascript:SendMsg()">发送信息</a>
+        <br>
+        <ol id="log"></ol>
+    </div>
+</body>
+
+</html>

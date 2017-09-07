@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<body>
+<form enctype="application/x-www-form-urlencoded" action="api/log_in" method="post">
+    <table>
+        <tr>
+            <td><label for="txtname">账号：</label></td>
+            <td><input type="text" id="txtname" name="login_username" /></td>
+        </tr>
+        <tr>
+            <td><label for="txtpswd">密码：</label></td>
+            <td><input type="password" id="txtpswd" name="login_password" /></td>
+        </tr>
+        <tr>
+            <td colspan=2>
+                <input type="reset" value="重置"/>
+                <input type="submit" value="登陆"/>
+		<button type="button" onclick="location.href='/sign_up.html'">注册</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>

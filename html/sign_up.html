@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>无标题文档</title>
+</head>
+<body>
+<form id = "form1" enctype="application/x-www-form-urlencoded" action="api/sign_up" method="post">
+    <table>
+        <tr>
+            <td><label for="txtname">账号：</label></td>
+            <td><input type="text" id="txtname" name="sign_username" /></td>
+        </tr>
+        <tr>
+            <td><label for="txtpswd">密码：</label></td>
+            <td><input type="password" id="txtpswd" name="sign_password" /></td>
+        </tr>
+        <tr>
+            <td><label for="txtemail">邮箱：</label></td>
+            <td><input type="email" id="txtmail" name="sign_email" /></td>
+        </tr>
+        <tr>
+            <td colspan=2>
+                <input type="reset" value= "重置"/>
+                <input type="submit" value= "注册"/>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
